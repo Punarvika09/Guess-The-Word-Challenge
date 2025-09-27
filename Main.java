@@ -73,7 +73,7 @@ public class Main {
             System.out.print("Enter username (min 5 letters): ");
             uname = sc.nextLine().trim();
             if (!Pattern.matches("[a-zA-Z]{5,}", uname)) {
-                System.out.println("❌ Username must be at least 5 letters.");
+                System.out.println("Username must be at least 5 letters.");
                 continue;
             }
             break;
@@ -84,7 +84,7 @@ public class Main {
             System.out.print("Enter password (min 5 chars, letter+number+@$%*): ");
             pass = sc.nextLine();
             if (!Pattern.matches("(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$%*]).{5,}", pass)) {
-                System.out.println("❌ Password specifications not followed.");
+                System.out.println("Password specifications not followed.");
                 continue;
             }
             break;
@@ -97,7 +97,7 @@ public class Main {
             ps.executeUpdate();
             System.out.println("? Registered successfully!");
         } catch (SQLException e) {
-            System.out.println("❌ Username already exists.");
+            System.out.println("Username already exists.");
         }
 
         return login(conn);
@@ -116,7 +116,7 @@ public class Main {
 
         if (rs.next()) return uname;
         else {
-            System.out.println("❌ Invalid credentials.");
+            System.out.println("Invalid credentials.");
             return login(conn);
         }
     }
@@ -124,9 +124,10 @@ public class Main {
     // ---------- Player Menu ----------
     private static void playerMenu(Connection conn, String username) throws SQLException {
         int userId = getUserId(conn, username);
+        System.out.println();
         System.out.println("These are the list of Twenty 5-lettered words. U need to guess the correct word among these. In a day u can guess 3 words. U will be given 5 guesses for each word.");
         System.out.println("APPLE MARIA MARCO DREAM DAVID SOFIA ELSIE JONAH FELIX OSCAR LUCIA LEMON ANGEL NORTH OCEAN PEARL IVANA RIVER HANNA HARRY");
-                        
+        System.out.println();                
         // Check for ongoing paused game
         PreparedStatement psPaused = conn.prepareStatement("SELECT * FROM games WHERE user_id=? AND status='PAUSED' ORDER BY game_id LIMIT 1");
         psPaused.setInt(1, userId);
@@ -243,7 +244,7 @@ public class Main {
             for (String g : previousGuesses) printColoredGuess(g, targetWord);
 
             if (guess.equals(targetWord)) {
-                System.out.println("🎉 Correct! You guessed the word!");
+                System.out.println("Correct! You guessed the word!");
                 PreparedStatement psUpdate = conn.prepareStatement("UPDATE games SET correct=1, attempts_used=?, status='COMPLETED' WHERE game_id=?");
                 psUpdate.setInt(1, attempt);
                 psUpdate.setInt(2, gameId);
@@ -307,7 +308,7 @@ private static void adminMenu(Connection conn) throws SQLException {
         ResultSet rs = ps.executeQuery();
 
         int userCount = 0;
-        System.out.println("\n📊 Daily Report:");
+        System.out.println("\n Daily Report:");
         System.out.printf("%-15s %-15s %-15s\n", "Username", "Correct", "Wrong");
         while (rs.next()) {
             userCount++;
@@ -411,3 +412,4 @@ private static void printUserGameDetails(ResultSet rs) throws SQLException {
     }
 
 }
+
