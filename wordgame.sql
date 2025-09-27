@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS words (
 );
 
 INSERT IGNORE INTO words (word_text) VALUES
-('APPLE'),('BRAIN'),('CHAIR'),('DREAM'),('EAGLE'),
-('FRUIT'),('GRAPE'),('HOUSE'),('INDEX'),('JUMPY'),
-('KNIFE'),('LEMON'),('MONEY'),('NORTH'),('OCEAN'),
-('PEARL'),('QUEEN'),('RIVER'),('SUGAR'),('TIGER');
+('APPLE'),('MARIA'),('MARCO'),('DREAM'),('DAVID'),
+('SOFIA'),('ELSIE'),('JONAH'),('FELIX'),('OSCAR'),
+('LUCIA'),('LEMON'),('ANGEL'),('NORTH'),('OCEAN'),
+('PEARL'),('IVANA'),('RIVER'),('HANNA'),('HARRY');
 
 -- 4️⃣ Games table
 CREATE TABLE IF NOT EXISTS games (
@@ -57,3 +57,4 @@ JOIN users u ON g.user_id = u.user_id
 JOIN words w ON g.word_id = w.id
 LEFT JOIN guesses gu ON g.game_id = gu.game_id
 ORDER BY u.username, g.date_played, g.game_id, gu.attempt_no;
+
